@@ -66,7 +66,7 @@ static void check_syscall_arg(int arg, unsigned long long reg, int pid,
 void print_syscall(syscall_t syscall, struct user_regs_struct regs, int pid,
     bool detailed)
 {
-    fprintf(stderr, "%s(", syscall.name);
+    fprintf(stderr, "Syscall %s (", syscall.name);
     if (syscall.arg1)
         show(syscall.arg1, regs.rdi, pid, detailed);
     check_syscall_arg(syscall.arg2, regs.rsi, pid, detailed);
