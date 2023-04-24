@@ -93,6 +93,5 @@ char *get_maps(long long rip, pid_t pid)
     close(fd);
     if (!name)
         asprintf(&name, "func_%#llx@%s", rip, bin);
-    printf("%s\n", name);
     return name;
 }
