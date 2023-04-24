@@ -10,9 +10,11 @@
 int is_func_call(struct user_regs_struct regs, pid_t pid)
 {
     long opcode;
+    long addr;
 
     if ((opcode = ptrace(PTRACE_PEEKDATA, pid, regs.rip, NULL)) != -1) {
-        if ((opcode & 0xff) == 0xE8 || (opcode & 0xff) == 0x9A || (opcode & 0xff) == 0xFF) {
+        if ((opcode & 0xff) == 0xE8 || (opcode & 0xff) == 0x9A) {
+            addr = (opcode & 0x00ffffffff);
             return 1;
         }
         if ((opcode & 0xff) == 0xc3 || (opcode & 0xff) == 0xcb)

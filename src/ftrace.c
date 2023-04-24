@@ -36,9 +36,9 @@ int ftrace(pid_t pid, bool detailed)
         ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL);
         wait4(pid, NULL, 0, NULL);
         ptrace(PTRACE_GETREGS, pid, NULL, &regs);
+        stack = check_funccall(regs, pid, stack);
         if (check_syscall(regs, pid, detailed) == 1)
             break;
-        stack = check_funccall(regs, pid, stack);
     }
     return 0;
 }
