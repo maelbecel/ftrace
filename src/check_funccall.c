@@ -21,12 +21,23 @@ int is_func_call(struct user_regs_struct regs, pid_t pid)
     return 0;
 }
 
-void check_funccall(struct user_regs_struct regs, pid_t pid)
+stack_t *check_funccall(struct user_regs_struct regs, pid_t pid, stack_t *stack)
 {
     int ret = 0;
 
-    if ((ret = is_func_call(regs, pid)) == 1)
+    if ((ret = is_func_call(regs, pid)) == 1) {
+        stack = stack_push(stack, "jej");
         fprintf(stderr, "Entering function func_%#llx\n", regs.rip);
-    else if (ret == 2)
-        fprintf(stderr, "Leaving function\n", regs.rip);
+    }
+    if (ret == 2) {
+        stack_t *tmp = stack_pop(stack);
+        if (!tmp || !tmp->func)
+            fprintf(stderr, "Leaving function unknown\n");
+        else {
+            fprintf(stderr, "Leaving function %s\n", tmp->func);
+            stack = stack->next;
+        }
+        if (tmp) free(tmp);
+    }
+    return stack;
 }

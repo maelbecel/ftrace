@@ -6,6 +6,7 @@
 */
 
 #include "print.h"
+#include "stack.h"
 
 int exit_ftrace(syscall_t syscall)
 {
@@ -28,6 +29,7 @@ int ftrace(pid_t pid, bool detailed)
 {
     struct user_regs_struct regs;
     bool is_regs = false;
+    stack_t *stack = stack_init();
 
     wait4(pid, NULL, 0, NULL);
     while (1) {
@@ -40,7 +42,7 @@ int ftrace(pid_t pid, bool detailed)
         }
         if (check_syscall(regs, pid, detailed) == 1)
             break;
-        // check_funccall(regs, pid);
+        stack = check_funccall(regs, pid, stack);
     }
     return 0;
 }
