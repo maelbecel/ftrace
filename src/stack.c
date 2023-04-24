@@ -29,11 +29,14 @@ my_stack_t *stack_push(my_stack_t *stack, char *func)
     return (new);
 }
 
-my_stack_t *stack_pop(my_stack_t *stack)
+my_stack_t *stack_pop(my_stack_t **stack)
 {
-    if (!stack)
+    my_stack_t *tmp = *stack;
+
+    if (!tmp)
         return (NULL);
-    return (stack->next);
+    *stack = (*stack)->next;
+    return (tmp);
 }
 
 void stack_print(my_stack_t *stack)

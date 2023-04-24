@@ -34,12 +34,11 @@ my_stack_t *check_funccall(struct user_regs_struct regs, pid_t pid, my_stack_t *
         fprintf(stderr, "Entering function %s at %#llx\n", func, regs.rip);
     }
     if (ret == 2) {
-        my_stack_t *tmp = stack_pop(stack);
+        my_stack_t *tmp = stack_pop(&stack);
         if (!tmp || !tmp->func)
             fprintf(stderr, "Leaving function unknown\n");
         else {
             fprintf(stderr, "Leaving function %s\n", tmp->func);
-            stack = stack->next;
         }
         if (tmp)
             free(tmp);
