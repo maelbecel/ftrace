@@ -26,25 +26,21 @@ int exit_ftrace(syscall_t syscall)
  */
 int ftrace(pid_t pid, bool detailed)
 {
-    syscall_t syscall;
     struct user_regs_struct regs;
-    char opcode;
+    bool is_regs = false;
 
     wait4(pid, NULL, 0, NULL);
     while (1) {
         ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL);
         wait4(pid, NULL, 0, NULL);
         ptrace(PTRACE_GETREGS, pid, NULL, &regs);
-        if (is_syscall(regs, pid)) {
-            syscall = get_syscall(regs.rax);
-            print_syscall(syscall, regs, pid, detailed);
-            ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL);
-            wait4(pid, NULL, 0, NULL);
-            check_ret(syscall.ret, (long long)regs.rax, pid, detailed);
-            if (exit_ftrace(syscall))
-                break;
+        if (!is_regs) {
+            get_maps(regs.rip, pid);
+            is_regs = true;
         }
-        check_funccall(regs, pid);
+        if (check_syscall(regs, pid, detailed) == 1)
+            break;
+        // check_funccall(regs, pid);
     }
     return 0;
 }

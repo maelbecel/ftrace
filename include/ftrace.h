@@ -17,9 +17,16 @@
     #include <sys/user.h>
     #include <stdbool.h>
     #include <string.h>
+    #include <fcntl.h>
     #include <stddef.h>
     #include <unistd.h>
     #include <stdio.h>
+    #include <stdlib.h>
+    #include <err.h>
+    #include <gelf.h>
+    #include <stdint.h>
+    #include <sysexits.h>
+    #define _GNU_SOURCE
 
     #include "my.h"
     #include "printf.h"
@@ -39,5 +46,8 @@
     void check_ret(int type, long long rax, pid_t pid, bool detailed);
     int ftrace(pid_t pid, bool detailed);
     void show(int type, unsigned long long reg, int pid, bool detailed);
+    void check_funccall(struct user_regs_struct regs, pid_t pid);
+    void get_maps(long long rip, pid_t pid);
+    int check_syscall(struct user_regs_struct regs, pid_t pid, bool detailed);
 
 #endif

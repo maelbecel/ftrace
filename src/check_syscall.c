@@ -5,7 +5,7 @@
 ** check_syscall
 */
 
-#include "ftrace.h"
+#include "print.h"
 
 /**
  * If the system call number is greater than 328, then single step the process
@@ -39,6 +39,23 @@ int check_single_step(pid_t pid)
     if (ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL) == -1) {
         printf("\n");
         return 1;
+    }
+    return 0;
+}
+
+int check_syscall(struct user_regs_struct regs, pid_t pid, bool detailed)
+{
+    syscall_t syscall;
+    char opcode;
+
+    if (is_syscall(regs, pid)) {
+        syscall = get_syscall(regs.rax);
+        print_syscall(syscall, regs, pid, detailed);
+        ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL);
+        wait4(pid, NULL, 0, NULL);
+        check_ret(syscall.ret, (long long)regs.rax, pid, detailed);
+        if (exit_ftrace(syscall))
+            return 1;
     }
     return 0;
 }
