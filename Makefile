@@ -23,6 +23,7 @@ SRC          =         $(SOURCES)ftrace.c \
 					   $(SOURCES)get_syscall.c \
 					   $(SOURCES)print_syscall.c \
 					   $(SOURCES)check_syscall.c \
+					   $(SOURCES)check_funccall.c \
 					   $(SOURCES)print/print_env.c \
 					   $(SOURCES)print/print_num.c \
 					   $(SOURCES)print/print_string.c \

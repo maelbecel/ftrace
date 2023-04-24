@@ -57,7 +57,7 @@ int main(int ac, char **av)
             pid = new_pid;
             ptrace(PTRACE_ATTACH, pid, NULL, NULL);
         }
-        ftrace(pid, detailed);
+        return ftrace(pid, detailed);
     }
     return 0;
 }

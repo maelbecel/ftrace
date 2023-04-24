@@ -32,11 +32,12 @@
         char *name;
     } err_t;
 
-    int check_negative_rax(struct user_regs_struct regs, pid_t pid);
+    int is_func_call(struct user_regs_struct regs, pid_t pid);
+    int is_syscall(struct user_regs_struct regs, pid_t pid);
     int check_single_step(pid_t pid);
     void get_errno(long long rax);
     void check_ret(int type, long long rax, pid_t pid, bool detailed);
-    void ftrace(pid_t pid, bool detailed);
+    int ftrace(pid_t pid, bool detailed);
     void show(int type, unsigned long long reg, int pid, bool detailed);
 
 #endif

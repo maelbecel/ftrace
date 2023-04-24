@@ -16,12 +16,13 @@
  *
  * @return The return value of the system call.
  */
-int check_negative_rax(struct user_regs_struct regs, pid_t pid)
+int is_syscall(struct user_regs_struct regs, pid_t pid)
 {
-    if (regs.orig_rax > 328) {
-        if (ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL) == -1)
+    long opcode;
+
+    if ((opcode = ptrace(PTRACE_PEEKDATA, pid, regs.rip, NULL)) != -1) {
+        if ((opcode & 0xffff) == 0x050f)
             return 1;
-        return 2;
     }
     return 0;
 }
