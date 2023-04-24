@@ -7,9 +7,9 @@
 
 #include "stack.h"
 
-stack_t *stack_init(void)
+my_stack_t *stack_init(void)
 {
-    stack_t *stack = malloc(sizeof(stack_t));
+    my_stack_t *stack = malloc(sizeof(my_stack_t));
 
     if (!stack)
         return (NULL);
@@ -18,9 +18,9 @@ stack_t *stack_init(void)
     return (stack);
 }
 
-stack_t *stack_push(stack_t *stack, char *func)
+my_stack_t *stack_push(my_stack_t *stack, char *func)
 {
-    stack_t *new = malloc(sizeof(stack_t));
+    my_stack_t *new = malloc(sizeof(my_stack_t));
 
     if (!new)
         return (NULL);
@@ -29,16 +29,16 @@ stack_t *stack_push(stack_t *stack, char *func)
     return (new);
 }
 
-stack_t *stack_pop(stack_t *stack)
+my_stack_t *stack_pop(my_stack_t *stack)
 {
     if (!stack)
         return (NULL);
     return (stack->next);
 }
 
-void stack_print(stack_t *stack)
+void stack_print(my_stack_t *stack)
 {
-    stack_t *tmp = stack;
+    my_stack_t *tmp = stack;
 
     while (tmp->func) {
         printf("%s\n", tmp->func);
@@ -46,9 +46,9 @@ void stack_print(stack_t *stack)
     }
 }
 
-void steak_frite(stack_t *stack)
+void steak_frite(my_stack_t *stack)
 {
-    stack_t *tmp = stack;
+    my_stack_t *tmp = stack;
 
     while (stack->func) {
         tmp = stack;
@@ -57,9 +57,9 @@ void steak_frite(stack_t *stack)
     }
 }
 
-int stack_length(stack_t *stack)
+int stack_length(my_stack_t *stack)
 {
-    stack_t *tmp = stack;
+    my_stack_t *tmp = stack;
     int i = 0;
 
     while (tmp) {

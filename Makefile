@@ -8,7 +8,7 @@
 NAME         =		    ftrace
 
 INCLUDE      =         -I include/ -I include/lib/ -L lib/ \
-                       -lmy -lmyprintf -lformatstring
+                       -lmy -lmyprintf -lformatstring -lelf
 
 CFLAGS       +=         -Wall -Wextra -pedantic \
 					        -Wstrict-prototypes -fstack-protector\

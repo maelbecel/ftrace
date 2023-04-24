@@ -8,6 +8,7 @@
 #ifndef FTRACE_H_
     #define FTRACE_H_
 
+    #define _GNU_SOURCE
     #include <sys/stat.h>
     #include <sys/wait.h>
     #include <sys/resource.h>
@@ -26,7 +27,6 @@
     #include <gelf.h>
     #include <stdint.h>
     #include <sysexits.h>
-    #define _GNU_SOURCE
 
     #include "my.h"
     #include "printf.h"
@@ -47,8 +47,8 @@
     void check_ret(int type, long long rax, pid_t pid, bool detailed);
     int ftrace(pid_t pid, bool detailed);
     void show(int type, unsigned long long reg, int pid, bool detailed);
-    stack_t *check_funccall(struct user_regs_struct regs, pid_t pid, stack_t *stack);
-    void get_maps(long long rip, pid_t pid);
+    my_stack_t *check_funccall(struct user_regs_struct regs, pid_t pid, my_stack_t *stack);
+    char *get_maps(long long rip, pid_t pid);
     int check_syscall(struct user_regs_struct regs, pid_t pid, bool detailed);
 
 #endif

@@ -29,17 +29,13 @@ int ftrace(pid_t pid, bool detailed)
 {
     struct user_regs_struct regs;
     bool is_regs = false;
-    stack_t *stack = stack_init();
+    my_stack_t *stack = stack_init();
 
     wait4(pid, NULL, 0, NULL);
     while (1) {
         ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL);
         wait4(pid, NULL, 0, NULL);
         ptrace(PTRACE_GETREGS, pid, NULL, &regs);
-        if (!is_regs) {
-            get_maps(regs.rip, pid);
-            is_regs = true;
-        }
         if (check_syscall(regs, pid, detailed) == 1)
             break;
         stack = check_funccall(regs, pid, stack);
