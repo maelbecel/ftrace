@@ -36,6 +36,8 @@ int is_syscall(struct user_regs_struct regs, pid_t pid)
  */
 int check_single_step(pid_t pid)
 {
+    (void)(print_table);
+    (void)(table);
     if (ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL) == -1) {
         printf("\n");
         return 1;
@@ -46,7 +48,6 @@ int check_single_step(pid_t pid)
 int check_syscall(struct user_regs_struct regs, pid_t pid, bool detailed)
 {
     syscall_t syscall;
-    char opcode;
 
     if (is_syscall(regs, pid)) {
         syscall = get_syscall(regs.rax);

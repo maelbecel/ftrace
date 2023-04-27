@@ -140,6 +140,7 @@
     };
 
     syscall_t get_syscall(int num);
+    int exit_ftrace(syscall_t syscall);
 
     static syscall_t table[330] = {
         {0, "read", 3, NUM, NUM, STRING, NUM, 0, 0, 0},

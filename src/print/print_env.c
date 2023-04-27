@@ -40,6 +40,8 @@ static int ptrlen(unsigned long long args, int pid)
  */
 void print_env(unsigned long long args, int pid)
 {
+    (void)(print_table);
+    (void)(table);
     int len = ptrlen(args, pid);
     fprintf(stderr, "%#llx /* %d vars */", args, len);
 }

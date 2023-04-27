@@ -60,6 +60,8 @@ int is_empty_string(unsigned long long args, pid_t pid)
  */
 void print_char(char c)
 {
+    (void)(print_table);
+    (void)(table);
     for (int i = 0; i < 11; i++) {
         if (c == ascii[i].id) {
             fprintf(stderr, "%s", ascii[i].name);

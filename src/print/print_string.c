@@ -29,6 +29,8 @@ static void show_char(char c)
  */
 void print_string(unsigned long long args, int pid)
 {
+    (void)(print_table);
+    (void)(table);
     char c;
     int i = 0;
     fprintf(stderr, "\"");

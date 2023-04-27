@@ -27,15 +27,18 @@ int exit_ftrace(syscall_t syscall)
  */
 int ftrace(pid_t pid, bool detailed)
 {
+    (void)(print_table);
+    (void)(table);
     struct user_regs_struct regs;
-    bool is_regs = false;
     my_stack_t *stack = stack_init();
 
     wait4(pid, NULL, 0, NULL);
     while (1) {
-        ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL);
+        if (ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL) == -1)
+            return 84;
         wait4(pid, NULL, 0, NULL);
-        ptrace(PTRACE_GETREGS, pid, NULL, &regs);
+        if (ptrace(PTRACE_GETREGS, pid, NULL, &regs) == -1)
+            return 84;
         stack = check_funccall(regs, pid, stack);
         if (check_syscall(regs, pid, detailed) == 1)
             break;

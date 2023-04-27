@@ -16,6 +16,8 @@
  */
 void print_pointer(unsigned long long arg, UNUSED int pid)
 {
+    (void)(print_table);
+    (void)(table);
     if (arg)
         fprintf(stderr, "%#llx", arg);
     else

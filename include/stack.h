@@ -8,6 +8,7 @@
 #ifndef STACK_H_
     #define STACK_H_
 
+    #include <stdio.h>
     #include <stdlib.h>
     #include <stddef.h>
 

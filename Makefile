@@ -20,6 +20,7 @@ MAIN		 =         $(SOURCES)main.c
 
 SRC          =         $(SOURCES)ftrace.c \
 			           $(SOURCES)stack.c	 \
+					   $(SOURCES)get_symbol.c \
 					   $(SOURCES)get_maps.c \
 					   $(SOURCES)get_errno_code.c \
 					   $(SOURCES)get_syscall.c \

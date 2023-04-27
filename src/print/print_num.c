@@ -15,5 +15,7 @@
  */
 void print_num(unsigned long long arg, UNUSED int pid)
 {
+    (void)(print_table);
+    (void)(table);
     fprintf(stderr, "%lld", arg);
 }
