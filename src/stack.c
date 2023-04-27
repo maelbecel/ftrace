@@ -59,15 +59,3 @@ void steak_frite(my_stack_t *stack)
         free(tmp);
     }
 }
-
-int stack_length(my_stack_t *stack)
-{
-    my_stack_t *tmp = stack;
-    int i = 0;
-
-    while (tmp) {
-        i++;
-        tmp = tmp->next;
-    }
-    return (i);
-}

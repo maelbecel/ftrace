@@ -10,7 +10,7 @@
 
 int exit_ftrace(syscall_t syscall)
 {
-    if (strcmp(syscall.name, "exit_group") == 0) {
+    if (!syscall.name || strcmp(syscall.name, "exit_group") == 0) {
         fprintf(stderr, "+++ exited with 0 +++\n");
         return 1;
     }

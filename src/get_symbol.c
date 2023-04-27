@@ -21,8 +21,7 @@ char *get_name(long sym_addr, GElf_Shdr *shdr, Elf_Scn *scn, Elf **e)
         GElf_Sym sym;
         if (gelf_getsym(data, i, &sym) != &sym)
             errx(EX_SOFTWARE, "getsym() failed: %s." ,elf_errmsg(-1));
-        if (GELF_ST_TYPE(sym.st_info) != STT_FUNC)
-            continue;
+        if (GELF_ST_TYPE(sym.st_info) != STT_FUNC) continue;
         if ((name = elf_strptr(*e, shdr->sh_link, sym.st_name)) == NULL)
             errx(EX_SOFTWARE, "strptr() failed: %s." ,elf_errmsg(-1));
         if (sym_addr >= (long)sym.st_value &&
@@ -32,9 +31,9 @@ char *get_name(long sym_addr, GElf_Shdr *shdr, Elf_Scn *scn, Elf **e)
     return NULL;
 }
 
-Elf_Scn *get_scn(Elf **e, size_t shstrndx, GElf_Shdr *shdr)
+Elf_Scn *get_scene(Elf **e, size_t shstrndx, GElf_Shdr *shdr)
 {
-    Elf_Scn *scn;
+    Elf_Scn *scn = NULL;
     char *name;
 
     while ((scn = elf_nextscn(*e, scn)) != NULL) {
@@ -59,7 +58,8 @@ Elf *get_shdrstrndx(int *fd, pid_t pid)
     strcat(filename, inttochar(pid));
     strcat(filename, "/exe");
     if (elf_version(EV_CURRENT) == EV_NONE)
-        errx(EX_SOFTWARE , "ELF library initialization failed : %s ", elf_errmsg(-1));
+        errx(EX_SOFTWARE , "ELF library initialization failed : %s ",
+        elf_errmsg(-1));
     if ((*fd = open(filename, O_RDONLY)) < 0)
         err(EX_NOINPUT , "open \"%s\" failed", filename);
     if ((e = elf_begin(*fd, ELF_C_READ , NULL )) == NULL )
@@ -82,7 +82,7 @@ char *get_exe(long sym_addr, pid_t pid)
     e = get_shdrstrndx(&fd, pid);
     if (elf_getshdrstrndx(e, &shstrndx) != 0)
         errx(EX_SOFTWARE, "getshdr() failed: %s.", elf_errmsg(-1));
-    scn = get_scn(&e, shstrndx, &shdr);
+    scn = get_scene(&e, shstrndx, &shdr);
     if (!scn)
         return NULL;
     name = get_name(sym_addr, &shdr, scn, &e);

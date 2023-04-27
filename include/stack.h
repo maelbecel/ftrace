@@ -22,7 +22,5 @@
     void stack_print(my_stack_t *stack);
     void steak_frite(my_stack_t *stack);
     my_stack_t *stack_init(void);
-    int stack_length(my_stack_t *stack);
-
 
 #endif /* !STACK_H_ */

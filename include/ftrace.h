@@ -52,7 +52,7 @@
     char *get_maps(long sym_addr, pid_t pid);
     int check_syscall(struct user_regs_struct regs, pid_t pid, bool detailed);
     char *get_name(long sym_addr, GElf_Shdr *shdr, Elf_Scn *scn, Elf **e);
-    Elf_Scn *get_scn(Elf **e, size_t shstrndx, GElf_Shdr *shdr);
+    Elf_Scn *get_scene(Elf **e, size_t shstrndx, GElf_Shdr *shdr);
     Elf *get_shdrstrndx(int *fd, pid_t pid);
     char *get_exe(long sym_addr, pid_t pid);
 
