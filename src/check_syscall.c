@@ -51,6 +51,10 @@ int check_syscall(struct user_regs_struct regs, pid_t pid, bool detailed)
 
     if (is_syscall(regs, pid)) {
         syscall = get_syscall(regs.rax);
+        if (!syscall.name) {
+            fprintf(stderr, "Syscall (null)\n");
+            return 0;
+        }
         print_syscall(syscall, regs, pid, detailed);
         ptrace(PTRACE_SINGLESTEP, pid, NULL, NULL);
         wait4(pid, NULL, 0, NULL);
