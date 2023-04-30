@@ -26,7 +26,7 @@ char *parse_maps(char *line, long sym_addr, pid_t pid)
         }
     }
     if (!name)
-        asprintf(&name, "func_%#lx@%s", sym_addr, lib);
+        asprintf(&name, "func_%#lX@%s", sym_addr, lib);
     return name;
 }
 

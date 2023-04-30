@@ -77,7 +77,7 @@ char *get_exe(long sym_addr, pid_t pid)
     GElf_Shdr shdr;
     size_t shstrndx;
     Elf_Scn *scn = NULL;
-    char *name;
+    char *name = NULL;
 
     e = get_shdrstrndx(&fd, pid);
     if (elf_getshdrstrndx(e, &shstrndx) != 0)

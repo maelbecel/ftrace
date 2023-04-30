@@ -12,7 +12,9 @@ INCLUDE      =         -I include/ -I include/lib/ -L lib/ \
 
 CFLAGS       +=         -Wall -Wextra -pedantic \
 					        -Wstrict-prototypes -fstack-protector\
-					        -Wold-style-definition -std=c99 $(INCLUDE)
+					        -Wold-style-definition -std=c99 \
+							-O0 -Wl,-z,norelro -fno-stack-protector \
+							-pipe $(INCLUDE)
 
 SOURCES      =         src/
 

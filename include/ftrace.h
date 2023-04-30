@@ -9,6 +9,8 @@
     #define FTRACE_H_
 
     #define _GNU_SOURCE
+    #include <ctype.h>
+    #include <libelf.h>
     #include <sys/stat.h>
     #include <sys/wait.h>
     #include <sys/resource.h>
@@ -26,6 +28,7 @@
     #include <err.h>
     #include <gelf.h>
     #include <stdint.h>
+    #include <signal.h>
     #include <sysexits.h>
 
     #include "my.h"

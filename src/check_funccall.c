@@ -36,9 +36,7 @@ my_stack_t *stack)
     }
     if (ret == 2) {
         my_stack_t *tmp = stack_pop(&stack);
-        if (!tmp || !tmp->func)
-            fprintf(stderr, "Leaving function unknown\n");
-        else
+        if (tmp && tmp->func)
             fprintf(stderr, "Leaving function %s\n", tmp->func);
         if (tmp)
             free(tmp);
