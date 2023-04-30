@@ -13,15 +13,16 @@ char *parse_maps(char *line, long sym_addr, pid_t pid)
     char **tmp;
     char *lib;
     char *name;
+    char *offset;
 
     for (int i = 0; tab[i]; i++) {
         tmp = tab;
         tmp = my_str_to_word_array(tmp[i], ' ');
+        offset = tmp[3];
         lib = tmp[5];
         tmp = my_str_to_word_array(tmp[0], '-');
-        if (strtoll(tmp[0], NULL, 16) <= sym_addr &&
-        sym_addr <= strtoll(tmp[1], NULL, 16)) {
-            name = get_exe(sym_addr, pid);
+        if (strtoll(tmp[0], NULL, 16) <= sym_addr && sym_addr <= strtoll(tmp[1], NULL, 16)) {
+            name = get_exe(sym_addr + strtoll(offset, NULL, 16), pid);
             break;
         }
     }
